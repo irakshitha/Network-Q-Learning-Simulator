@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Based Adaptive Routing Protocol Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>AI-Based Adaptive Routing Protocol Simulator</h1>
+            <p class="subtitle">Demonstrating Reinforcement Learning for Network Routing</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Control Panel (Left Sidebar) -->
+            <aside class="control-panel">
+                <div class="panel-section">
+                    <h3>Route Configuration</h3>
+                    <div class="form-group">
+                        <label class="form-label">Source Node</label>
+                        <select id="sourceSelect" class="form-control">
+                            <option value="">Select Source</option>
+                            <option value="A">Router A</option>
+                            <option value="B">Router B</option>
+                            <option value="C">Router C</option>
+                            <option value="D">Router D</option>
+                            <option value="E">Router E</option>
+                            <option value="F">Router F</option>
+                            <option value="G">Router G</option>
+                            <option value="H">Router H</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Destination Node</label>
+                        <select id="destinationSelect" class="form-control">
+                            <option value="">Select Destination</option>
+                            <option value="A">Router A</option>
+                            <option value="B">Router B</option>
+                            <option value="C">Router C</option>
+                            <option value="D">Router D</option>
+                            <option value="E">Router E</option>
+                            <option value="F">Router F</option>
+                            <option value="G">Router G</option>
+                            <option value="H">Router H</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Simulation Controls</h3>
+                    <div class="button-group">
+                        <button id="startBtn" class="btn btn--primary">Start Simulation</button>
+                        <button id="pauseBtn" class="btn btn--secondary">Pause</button>
+                        <button id="resetBtn" class="btn btn--outline">Reset</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>AI Agent Controls</h3>
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="aiEnabled" checked>
+                            <span class="checkmark"></span>
+                            Enable AI Routing
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Algorithm</label>
+                        <select id="algorithmSelect" class="form-control">
+                            <option value="ai">Deep Q-Learning</option>
+                            <option value="traditional">Shortest Path (Dijkstra)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Network Conditions</h3>
+                    <div class="form-group">
+                        <label class="form-label">Link Failure Rate: <span id="failureRateValue">10%</span></label>
+                        <input type="range" id="failureRate" class="slider" min="0" max="50" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Congestion Level: <span id="congestionValue">20%</span></label>
+                        <input type="range" id="congestionLevel" class="slider" min="0" max="100" value="20">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Animation Speed: <span id="speedValue">1x</span></label>
+                        <input type="range" id="animationSpeed" class="slider" min="0.5" max="3" step="0.5" value="1">
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Network Topology Canvas -->
+            <section class="canvas-container">
+                <div class="canvas-header">
+                    <h3>Network Topology</h3>
+                    <div class="status-indicators">
+                        <div class="status-item">
+                            <div class="status-dot status-good"></div>
+                            <span>Active</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot status-congested"></div>
+                            <span>Congested</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot status-failed"></div>
+                            <span>Failed</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot status-selected"></div>
+                            <span>Selected Path</span>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="networkCanvas" width="600" height="400"></canvas>
+                <div class="canvas-info">
+                    <p>Click nodes to select source/destination. Links change color based on their current state.</p>
+                </div>
+            </section>
+
+            <!-- Metrics Dashboard (Right Sidebar) -->
+            <aside class="metrics-panel">
+                <div class="panel-section">
+                    <h3>Real-time Metrics</h3>
+                    <div class="metric-item">
+                        <label>Current Path Latency</label>
+                        <span id="currentLatency" class="metric-value">-- ms</span>
+                    </div>
+                    <div class="metric-item">
+                        <label>Number of Hops</label>
+                        <span id="hopCount" class="metric-value">--</span>
+                    </div>
+                    <div class="metric-item">
+                        <label>Packet Loss Rate</label>
+                        <span id="packetLoss" class="metric-value">--%</span>
+                    </div>
+                    <div class="metric-item">
+                        <label>AI Learning Progress</label>
+                        <span id="learningProgress" class="metric-value">--%</span>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Performance Comparison</h3>
+                    <div class="comparison-chart">
+                        <div class="chart-item">
+                            <label>Traditional Routing</label>
+                            <div class="progress-bar">
+                                <div id="traditionalPerf" class="progress-fill traditional"></div>
+                            </div>
+                            <span id="traditionalScore" class="score">0</span>
+                        </div>
+                        <div class="chart-item">
+                            <label>AI Routing</label>
+                            <div class="progress-bar">
+                                <div id="aiPerf" class="progress-fill ai"></div>
+                            </div>
+                            <span id="aiScore" class="score">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Q-Learning State</h3>
+                    <div class="q-values">
+                        <div class="q-value-item">
+                            <label>Current State</label>
+                            <span id="currentState" class="q-value">--</span>
+                        </div>
+                        <div class="q-value-item">
+                            <label>Best Action</label>
+                            <span id="bestAction" class="q-value">--</span>
+                        </div>
+                        <div class="q-value-item">
+                            <label>Q-Value</label>
+                            <span id="qValue" class="q-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Information Panel (Bottom) -->
+        <footer class="info-panel">
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="algorithm">Algorithm</button>
+                    <button class="tab-btn" data-tab="decisions">Current Decision</button>
+                    <button class="tab-btn" data-tab="learning">Q-Learning Info</button>
+                    <button class="tab-btn" data-tab="help">Help</button>
+                </div>
+                <div class="tab-content">
+                    <div id="algorithm" class="tab-pane active">
+                        <h4>Algorithm Explanation</h4>
+                        <p><strong>Deep Q-Learning:</strong> The AI agent learns optimal routing paths through experience. It observes network states (congestion, failures) and learns which actions (route selections) lead to better performance over time.</p>
+                        <p><strong>Traditional Routing:</strong> Uses shortest path algorithms like Dijkstra, which always choose the path with minimum hops or distance, regardless of current network conditions.</p>
+                    </div>
+                    <div id="decisions" class="tab-pane">
+                        <h4>Current Routing Decision</h4>
+                        <p id="decisionExplanation">Select source and destination nodes to see routing decisions.</p>
+                        <div id="pathDetails"></div>
+                    </div>
+                    <div id="learning" class="tab-pane">
+                        <h4>Q-Learning Information</h4>
+                        <p><strong>Q-Values:</strong> Represent the expected future reward for taking a specific action in a given state. Higher Q-values indicate better routing choices.</p>
+                        <p><strong>Learning Process:</strong> The agent explores different paths, observes results, and updates its knowledge to make better decisions in similar situations.</p>
+                        <p><strong>Adaptation:</strong> As network conditions change, the agent continuously learns and adapts its routing strategy.</p>
+                    </div>
+                    <div id="help" class="tab-pane">
+                        <h4>How to Use the Simulator</h4>
+                        <ol>
+                            <li>Select source and destination nodes from the dropdowns</li>
+                            <li>Choose between AI routing or traditional shortest path</li>
+                            <li>Start the simulation to see packet routing in action</li>
+                            <li>Adjust network conditions to see how algorithms adapt</li>
+                            <li>Compare performance metrics between different approaches</li>
+                        </ol>
+                        <p><strong>Educational Purpose:</strong> This simulator demonstrates how AI can improve network routing by learning from experience and adapting to changing conditions.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

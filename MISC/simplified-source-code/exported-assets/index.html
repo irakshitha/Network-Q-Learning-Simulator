@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple AI Routing Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>AI Routing Simulator</h1>
+            <p class="subtitle">Demonstrating Smart vs Traditional Network Routing</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Simple Controls -->
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label class="form-label">From:</label>
+                    <select id="sourceSelect" class="form-control">
+                        <option value="A">Node A</option>
+                        <option value="B">Node B</option>
+                        <option value="C">Node C</option>
+                        <option value="D">Node D</option>
+                        <option value="E">Node E</option>
+                        <option value="F">Node F</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="form-label">To:</label>
+                    <select id="destinationSelect" class="form-control">
+                        <option value="">Select destination</option>
+                        <option value="A">Node A</option>
+                        <option value="B">Node B</option>
+                        <option value="C">Node C</option>
+                        <option value="D">Node D</option>
+                        <option value="E">Node E</option>
+                        <option value="F">Node F</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="form-label">Mode:</label>
+                    <select id="modeSelect" class="form-control">
+                        <option value="traditional">Traditional Routing</option>
+                        <option value="ai">AI Smart Routing</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-panel">
+                <button id="startBtn" class="btn btn--primary">Start Simulation</button>
+                <button id="addCongestionBtn" class="btn btn--secondary">Add Congestion</button>
+                <button id="resetBtn" class="btn btn--outline">Reset Network</button>
+            </div>
+
+            <!-- Network Canvas -->
+            <div class="network-container">
+                <div class="network-header">
+                    <h3>Network Topology</h3>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-line normal"></div>
+                            <span>Normal Link</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-line congested"></div>
+                            <span>Congested Link</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-line selected"></div>
+                            <span>Selected Path</span>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="networkCanvas" width="500" height="350"></canvas>
+                <p class="canvas-help">Click any link to add congestion and see how AI adapts!</p>
+            </div>
+
+            <!-- Simple Metrics -->
+            <div class="metrics-panel">
+                <h3>Current Simulation</h3>
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <label>Path Cost</label>
+                        <span id="pathCost" class="metric-value">--</span>
+                    </div>
+                    <div class="metric">
+                        <label>Packets Sent</label>
+                        <span id="packetCount" class="metric-value">0</span>
+                    </div>
+                    <div class="metric">
+                        <label>Success Rate</label>
+                        <span id="successRate" class="metric-value">--%</span>
+                    </div>
+                    <div class="metric">
+                        <label>Learning Steps</label>
+                        <span id="learningSteps" class="metric-value">0</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Explanation Panel -->
+        <div class="explanation-panel">
+            <h3>What's Happening?</h3>
+            <div id="currentExplanation" class="explanation-text">
+                Select a source and destination to start the simulation.
+            </div>
+            <div id="pathComparison" class="path-comparison hidden">
+                <div class="comparison-item">
+                    <strong>Traditional Route:</strong> <span id="traditionalPath">--</span>
+                </div>
+                <div class="comparison-item">
+                    <strong>AI Route:</strong> <span id="aiPath">--</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
