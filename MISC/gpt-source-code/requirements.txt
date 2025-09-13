@@ -1,5 +1,0 @@
-streamlit
-networkx
-pyvis
-stable-baselines3
-gymnasium
